@@ -3,11 +3,29 @@ const loader = document.getElementById("loader")
 
 let photosArr = []
 
+const setAtributes = (element, attributes) => {
+	for (const key in attributes) {
+		element.setAttribute(key, attributes[key])
+	}
+}
+
 // create and add to DOM els for links and photos
 const displayPhotos = () => {
 	photosArr.forEach((photo) => {
 		const el = document.createElement("a")
-		el.setAttribute.href(photo)
+		const img = document.createElement("img")
+		setAtributes(el, {
+			href: photo.pageURL,
+			target: "_blank",
+		})
+		setAtributes(img, {
+			src: photo.webformatURL,
+			alt: photo.tags,
+			title: photo.tags,
+		})
+		imageContainer.appendChild(el)
+		el.appendChild(img)
+		// console.log(photo)
 	})
 }
 
@@ -21,7 +39,10 @@ const url = `https://pixabay.com/api/?key=${apiKey}&category=backgrounds&image_t
 const getPhotos = async () => {
 	try {
 		const response = await fetch(url)
-		photosArr = await response.json()
+		// photosArr = await response.json()
+		const photosObj = await response.json()
+		photosArr = photosObj.hits
+		displayPhotos()
 		console.log(photosArr)
 	} catch (error) {}
 }
