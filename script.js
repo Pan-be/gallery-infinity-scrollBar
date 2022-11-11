@@ -3,6 +3,21 @@ const loader = document.getElementById("loader")
 
 let photosArr = []
 
+let ready = false
+let imagesLoaded = 0
+let totalImages = 0
+
+// check if al images are loaded
+const imageLoaded = () => {
+	console.log("image loaded")
+	imagesLoaded++
+	if (imagesLoaded === totalImages) {
+		ready = true
+		loader.hidden = true
+		console.log(ready)
+	}
+}
+
 const setAtributes = (element, attributes) => {
 	for (const key in attributes) {
 		element.setAttribute(key, attributes[key])
@@ -11,6 +26,10 @@ const setAtributes = (element, attributes) => {
 
 // create and add to DOM els for links and photos
 const displayPhotos = () => {
+	imagesLoaded = 0
+	totalImages = photosArr.length
+	console.log(totalImages)
+
 	photosArr.forEach((photo) => {
 		const el = document.createElement("a")
 		const img = document.createElement("img")
@@ -23,6 +42,7 @@ const displayPhotos = () => {
 			alt: photo.tags,
 			title: photo.tags,
 		})
+		img.addEventListener("load", imageLoaded)
 		imageContainer.appendChild(el)
 		el.appendChild(img)
 		// console.log(photo)
@@ -51,9 +71,10 @@ const getPhotos = async () => {
 window.addEventListener("scroll", () => {
 	// console.log("scrolled")
 	if (
-		window.innerHeight + window.scrollY >=
-		document.body.offsetHeight - 1000
+		window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000 &&
+		ready
 	) {
+		ready = false
 		getPhotos()
 	}
 })
