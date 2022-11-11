@@ -46,4 +46,15 @@ const getPhotos = async () => {
 		console.log(photosArr)
 	} catch (error) {}
 }
+
+// load more photos when scrooling is near bottom
+window.addEventListener("scroll", () => {
+	// console.log("scrolled")
+	if (
+		window.innerHeight + window.scrollY >=
+		document.body.offsetHeight - 1000
+	) {
+		getPhotos()
+	}
+})
 getPhotos()
