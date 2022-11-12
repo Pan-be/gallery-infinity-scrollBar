@@ -7,6 +7,12 @@ let ready = false
 let imagesLoaded = 0
 let totalImages = 0
 let count = 5
+// API
+// const count = 10
+const apiKey = "28643468-0bfd18c65d82c5dc5dca3f2bd"
+
+// const url = `https://api.unsplash.com/photos/random/?client_id=${apiKey}&count=${count}`
+let url = `https://pixabay.com/api/?key=${apiKey}&category=backgrounds&per_page=${count}&image_type=photo&pretty=true`
 
 // check if al images are loaded
 const imageLoaded = () => {
@@ -16,6 +22,7 @@ const imageLoaded = () => {
 		ready = true
 		loader.hidden = true
 		count = 200
+		url = `https://pixabay.com/api/?key=${apiKey}&category=backgrounds&per_page=${count}&image_type=photo&pretty=true`
 		// console.log(ready)
 	}
 }
@@ -50,13 +57,6 @@ const displayPhotos = () => {
 		// // console.log(photo)
 	})
 }
-
-// API
-// const count = 10
-const apiKey = "28643468-0bfd18c65d82c5dc5dca3f2bd"
-
-// const url = `https://api.unsplash.com/photos/random/?client_id=${apiKey}&count=${count}`
-const url = `https://pixabay.com/api/?key=${apiKey}&category=backgrounds&per_page=${count}&image_type=photo&pretty=true`
 
 const getPhotos = async () => {
 	try {
